@@ -40,7 +40,7 @@ function Header() {
         <Link to={'/login'} className='ms-4 border rounded px-2 py-1 hover:bg-white hover:text-black flex items-center'><FaUser/>Login</Link>
       </div>
       {/* ul -links */}
-      <ul className={listStatus?"flex flex-col":"md:flex justify-cente items-center hidden"}>
+      <ul className={listStatus?"flex flex-col":"md:flex justify-center items-center hidden"}>
         <li className='md:mx-4 mt-3 md:mt-0'><Link to={'/'}>HOME</Link></li>
         <li className='md:mx-4 my-3 md:my-0'><Link to={'/books'}>BOOKS</Link></li>
         <li className='md:mx-4 mb-3 md:mb-0'><Link to={'/contact'}>CONTACT</Link></li>
