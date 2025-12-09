@@ -3,6 +3,10 @@ import { FaEye, FaEyeSlash, FaUser } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import { loginAPI, registerAPI } from '../services/allAPI'
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+
+
 function Auth({ insideRegister }) {
   const navigate = useNavigate()
   const [viewPassword, setViewPassword] = useState(false)
@@ -45,40 +49,50 @@ function Auth({ insideRegister }) {
     }
   }
 
-  const handleLogin = async (e)=>{
+  const handleLogin = async (e) => {
     e.preventDefault()
-    const {email,password} = userDetails
-    if(email && password){
+    const { email, password } = userDetails
+    if (email && password) {
       //toast.success("API Call")
-      try{
+      try {
         //api call
         const result = await loginAPI(userDetails)
         console.log(result);
-        if(result.status==200){
+        if (result.status == 200) {
           toast.success("Login Successfull!!!")
-          sessionStorage.setItem("token",result.data.token)
-          sessionStorage.setItem("user",JSON.stringify(result.data.user))
-          setTimeout(()=>{
-            if(result.data.user.role == "admin"){
+          sessionStorage.setItem("token", result.data.token)
+          sessionStorage.setItem("user", JSON.stringify(result.data.user))
+          setTimeout(() => {
+            if (result.data.user.role == "admin") {
               navigate('/admin/home')
-            }else{
+            } else {
               navigate('/')
             }
-          },2500)
-        }else if(result.status==401 || result.status ==404){
-            toast.warning(result.response.data)
-            setUserDetails({username:"",email:"",password:""})
-        }else{
-          toast.error("Spmething went wrong!!!")
-          setUserDetails({username:"",email:"",password:""})
+          }, 2500)
+        } else if (result.status == 401 || result.status == 404) {
+          toast.warning(result.response.data)
+          setUserDetails({ username: "", email: "", password: "" })
+        } else {
+          toast.error("Something went wrong!!!")
+          setUserDetails({ username: "", email: "", password: "" })
         }
-        
-      }catch(err){
+
+      } catch (err) {
         console.log(err);
       }
-    }else{
+    } else {
       toast.info("Please fill the form completely!!!")
     }
+  }
+
+  const handleGoogleLogin = async (credentialResponse)=>{
+    console.log('Inside handleGoogleLogin');
+    console.log(credentialResponse);
+    const decode = jwtDecode(credentialResponse.credential)
+    console.log(decode);
+    
+    
+    
   }
 
 
@@ -110,13 +124,13 @@ function Auth({ insideRegister }) {
               }
             </div>
             {/* forgot password */}
-            
-              
-              <div className="flex justify-between mb-5">
-                <p className="text-xs text-orange-300">*Never share your password with others</p>
-                {!insideRegister && <button className='text-xs underline'>Forgot Password</button>}
-              </div>
-            
+
+
+            <div className="flex justify-between mb-5">
+              <p className="text-xs text-orange-300">*Never share your password with others</p>
+              {!insideRegister && <button className='text-xs underline'>Forgot Password</button>}
+            </div>
+
             {/* login/register btn */}
             <div className='text-center'>
               {
@@ -126,8 +140,25 @@ function Auth({ insideRegister }) {
                   <button onClick={handleLogin} className='bg-green-700 p-2 w-full rounded'>Login</button>
               }
             </div>
-            {/* already a user  */}
-            <div className='text-center'>
+            {/* google authentication  */}
+            <div className='text-center my-5'>
+              {!insideRegister && <p>---------------------or---------------------</p>}
+              {
+                !insideRegister &&
+                <div className='flex justify-center items-centermy-5 w-full my-5'>
+                  <GoogleLogin
+                    onSuccess={credentialResponse => {
+                      handleGoogleLogin(credentialResponse)
+                    }}
+                    onError={() => {
+                      console.log('Login Failed');
+                    }}
+                  />
+                </div>
+              }
+            </div>
+
+            <div className='text-center my-5'>
               {
                 insideRegister ?
                   <p className="text-blue-600 mt-4">Already a user? <Link to={'/login'} className='underline ms-5'>Login</Link></p>
