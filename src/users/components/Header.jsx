@@ -45,7 +45,7 @@ function Header() {
           :
           <div className='relative inline-block text-left'>
             <button onClick={()=>{setDropDown(!dropdown)}} className='w-full bg-white px-3 py-2 shadow hover:bg-gray-50'>
-              <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src="https://cdn-icons-png.flaticon.com/512/219/219969.png" alt="profile pic" />
+              <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp:"https://cdn-icons-png.flaticon.com/512/219/219969.png"} alt="profile pic" />
             </button>
             {
               dropdown &&
@@ -73,7 +73,7 @@ function Header() {
           :
           <div className='relative inline-block text-left'>
             <button onClick={()=>{setDropDown(!dropdown)}} className='w-full  px-3 py-2 shadow hover:bg-gray-50'>
-              <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src="https://cdn-icons-png.flaticon.com/512/219/219969.png" alt="profile pic" />
+              <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp:"https://cdn-icons-png.flaticon.com/512/219/219969.png"} alt="profile pic" />
             </button>
             {
               dropdown &&
