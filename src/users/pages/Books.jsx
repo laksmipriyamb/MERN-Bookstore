@@ -13,6 +13,11 @@ function Books() {
   const [showCategoryList, setShowCategoryList] = useState(false)
   const [token, setToken] = useState()
   const [allBooks, setAllBooks] = useState([])
+  const [allCategory, setAllCategory] = useState([])
+  const [tempAllBooks,setTempAllBooks] = useState([])
+
+  console.log(allCategory);
+
 
   console.log(allBooks);
 
@@ -29,12 +34,26 @@ function Books() {
     const reqHeader = {
       "Authorization": `Bearer ${token}`
     }
-    const result = await getAllBooksPageAPI(reqHeader,searchKey)
+    const result = await getAllBooksPageAPI(reqHeader, searchKey)
     if (result.status == 200) {
       setAllBooks(result.data)
+      setTempAllBooks(result.data)
+      const tempAllCategory = result.data?.map(item => item.category)
+      const tempCategorySet = new Set(tempAllCategory)
+      console.log([...tempCategorySet]);
+      setAllCategory([...tempCategorySet])
+
     } else {
       console.log(result);
 
+    }
+  }
+
+  const filterBooks = (category)=>{
+    if(category=="all"){
+      setAllBooks(tempAllBooks)
+    }else{
+      setAllBooks(tempAllBooks?.filter(item=>item.category==category))
     }
   }
 
@@ -52,7 +71,7 @@ function Books() {
               <h1 className="text-3xl font-bold my-5">All Books</h1>
               {/* search box */}
               <div className="flex my-5">
-                <input value={searchKey} onChange={e=>setSearchKey(e.target.value)} type="text" placeholder='Search By Title' className="border border-gray-400 p-2 md:w-100 w-64" />
+                <input value={searchKey} onChange={e => setSearchKey(e.target.value)} type="text" placeholder='Search By Title' className="border border-gray-400 p-2 md:w-100 w-64" />
                 <button className="bg-black text-white p-2">Search</button>
               </div>
 
@@ -70,14 +89,18 @@ function Books() {
                 <div className={showCategoryList ? "block" : "md:block hidden"}>
                   {/* category 1 */}
                   <div className="mt-3">
-                    <input type="radio" name="filter" id="all" />
+                    <input onClick={()=>filterBooks("all")} type="radio" name="filter" id="all" />
                     <label htmlFor="all" className='ms-3'>All</label>
                   </div>
                   {/* book caterory  */}
-                  <div className="mt-3">
-                    <input type="radio" name="filter" id="demo" />
-                    <label htmlFor="demo" className='ms-3'>Category name</label>
-                  </div>
+                  {
+                    allCategory?.map((category, index) => (
+                      <div key={index} className="mt-3">
+                        <input onClick={()=>filterBooks(category)} type="radio" name="filter" id={category} />
+                        <label htmlFor={category} className='ms-3'>{category}</label>
+                      </div>
+                    ))
+                  }
                 </div>
               </div>
               {/* books row */}

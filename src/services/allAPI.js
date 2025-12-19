@@ -41,3 +41,8 @@ export const getAllUserBooksAPI = async (reqHeader)=>{
 export const getAllUserBoughtBooksAPI = async (reqHeader)=>{
     return await commonAPI("GET",`${serverURL}/user-books/bought`,{},reqHeader)
 }
+
+//get book details by id : called by bookDetails component when it loads
+export const getBookDetailsByIdAPI = async (reqHeader,id)=>{
+    return await commonAPI("GET",`${serverURL}/book/${id}/view`,{},reqHeader)
+}
