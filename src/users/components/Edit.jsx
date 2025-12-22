@@ -24,7 +24,7 @@ function Edit() {
                         {/* image */}
                         <label htmlFor="uploadImg">
                             <input type="file" id='uploadImg' hidden />
-                            <img style={{ width: '150px', height: '150px', borderRadius: '50%' }} src="https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg" alt="profile" />
+                            <img style={{ width: '100px', height: '100px', borderRadius: '50%' }} src="https://img.freepik.com/premium-photo/happy-man-ai-generated-portrait-user-profile_1119669-1.jpg" alt="profile" />
                         </label>
                         <button className='bg-yellow-400 p-2 text-white rounded mb-5' style={{marginTop:'-20px'}}><FaPen/></button>
                         {/* name */}
