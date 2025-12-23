@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaAddressCard, FaBars, FaFacebook, FaInstagram,  FaPowerOff,  FaUser } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import { Link, useNavigate } from 'react-router-dom'
+import serverURL from '../../services/serverURL'
 
 
 function Header() {
@@ -56,7 +57,7 @@ function Header() {
           :
           <div className='relative inline-block text-left'>
             <button onClick={()=>{setDropDown(!dropdown)}} className='w-full bg-white px-3 py-2 shadow hover:bg-gray-50'>
-              <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp:"https://cdn-icons-png.flaticon.com/512/219/219969.png"} alt="profile pic" />
+              <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp.startsWith("https://lh3.googleusercontent.com/")?dp:`${serverURL}/uploads/${dp}`:"https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png"} alt="profile pic" />
             </button>
             {
               dropdown &&
@@ -84,7 +85,7 @@ function Header() {
           :
           <div className='relative inline-block text-left'>
             <button onClick={()=>{setDropDown(!dropdown)}} className='w-full  px-3 py-2 shadow hover:bg-gray-50'>
-              <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp:"https://cdn-icons-png.flaticon.com/512/219/219969.png"} alt="profile pic" />
+              <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp.startsWith("https://lh3.googleusercontent.com/")?dp:`${serverURL}/uploads/${dp}`:"https://www.pngall.com/wp-content/uploads/5/Profile-PNG-File.png"} alt="profile pic" />
             </button>
             {
               dropdown &&
