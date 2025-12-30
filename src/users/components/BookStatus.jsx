@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { getAllUserBooksAPI } from '../../services/allAPI'
+import { getAllUserBooksAPI, removeBookAPI } from '../../services/allAPI'
 import { useEffect } from 'react';
 
 function BookStatus() {
@@ -30,6 +30,22 @@ function BookStatus() {
         }
     }
 
+    const deleteBook = async (id) => {
+        const token = sessionStorage.getItem("token")
+        if (token) {
+            const reqHeader = {
+                "Authorization": `Bearer ${token}`
+            }
+            const result = await removeBookAPI(id,reqHeader)
+            if(result.status==200){
+                getUserUploadBooks()
+            }else{
+                console.log(result);
+                
+            }
+        }
+    }
+
     return (
         <div className='shadow rounded p-10 my-20 mx-5'>
             {/* book div duplicate */}
@@ -50,18 +66,18 @@ function BookStatus() {
 
                                         {
                                             book?.status == "pending" ?
-                                            < img width={'150px'} height={'150px'} src="https://psdstamps.com/wp-content/uploads/2022/04/round-pending-stamp-png.png" alt="pending" />
-                                            : book?.status == "approved" ?
-                                            <img width={'120px'} height={'50px'} src="https://static.vecteezy.com/system/resources/previews/024/382/871/non_2x/approved-sign-symbol-icon-label-stamp-green-round-design-transparent-background-free-png.png" alt="approved" />
-                                            :
-                                            <img width={'120px'} height={'50px'} src="https://pngimg.com/d/sold_out_PNG9.png" alt="sold" />
+                                                < img width={'150px'} height={'150px'} src="https://psdstamps.com/wp-content/uploads/2022/04/round-pending-stamp-png.png" alt="pending" />
+                                                : book?.status == "approved" ?
+                                                    <img width={'120px'} height={'50px'} src="https://static.vecteezy.com/system/resources/previews/024/382/871/non_2x/approved-sign-symbol-icon-label-stamp-green-round-design-transparent-background-free-png.png" alt="approved" />
+                                                    :
+                                                    <img width={'120px'} height={'50px'} src="https://pngimg.com/d/sold_out_PNG9.png" alt="sold" />
 
                                         }
                                     </div>
                                 </div>
                                 <div>
                                     <img src={book?.imageURL} alt="book" />
-                                    <button className="p-2 bg-red-600 text-white mt-4">DELETE</button>
+                                    <button onClick={()=>{deleteBook(book?._id)}} className="p-2 bg-red-600 text-white mt-4">DELETE</button>
                                 </div>
                             </div>
                         </div>
