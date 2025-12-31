@@ -1,8 +1,15 @@
 import React from 'react'
 import { FaPowerOff } from 'react-icons/fa'
 import { TbMarquee } from 'react-icons/tb'
+import { useNavigate } from 'react-router-dom'
 
 function AdminHeader() {
+  const navigate = useNavigate()
+
+  const logout = ()=>{
+    sessionStorage.clear()
+    navigate('/login')
+  }
   return (
     <>
     {/* header upper part */}
@@ -13,7 +20,7 @@ function AdminHeader() {
           <p className="text-2xl font-bold">BOOKSTORE</p>
         </div>
         {/* logout */}
-        <button className='bg-black px-3 py-2 rounded border text-white flex items-center hover:bg-white hover:text-black border-black'> <FaPowerOff className='me-2'/>LOGOUT</button>
+        <button onClick={logout} className='bg-black px-3 py-2 rounded border text-white flex items-center hover:bg-white hover:text-black border-black'> <FaPowerOff className='me-2'/>LOGOUT</button>
       </div>
       {/* header lower part */}
       <div className="bg-black p-2">

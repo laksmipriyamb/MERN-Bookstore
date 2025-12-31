@@ -103,9 +103,9 @@ function Edit() {
                                         :
                                         <img style={{ width: '100px', height: '100px', borderRadius: '50%' }} src={preview ? preview : "https://static.vecteezy.com/system/resources/previews/020/213/738/non_2x/add-profile-picture-icon-upload-photo-of-social-media-user-vector.jpg"} alt="profile" />
                                 }
+                            <button className='bg-yellow-400 p-2 text-white rounded mb-5' style={{ marginTop: '-20px',marginLeft:'35px' }}><FaPen /></button>
 
                             </label>
-                            <button className='bg-yellow-400 p-2 text-white rounded mb-5' style={{ marginTop: '-20px' }}><FaPen /></button>
 
                             {/* name */}
                             <div className=" mb-3 w-full px-5">
