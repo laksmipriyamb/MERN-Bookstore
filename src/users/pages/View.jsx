@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 import { FaBackward, FaCamera, FaEye } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { FaX } from 'react-icons/fa6'
-import { getBookDetailsByIdAPI } from '../../services/allAPI'
+import { getBookDetailsByIdAPI, purchaseBookAPI } from '../../services/allAPI'
 import serverURL from '../../services/serverURL'
 import {loadStripe} from '@stripe/stripe-js';
 
@@ -44,7 +44,24 @@ function View() {
   }
 
   const makePayment = async ()=>{
+    //to view stripe payment window in browser
     const stripe = await loadStripe('pk_test_51SkJOfI6PYKlC3Jo9dSPbz8UIdYEg5xiDhkJHtD05yzSZbHU2rBIefopvQJjyklX3eV5x6sLntgrAcyj9pRaztxt00MMFSfCtn');
+    //api call foe checkout
+    const token = sessionStorage.getItem("token")
+    if (token) {
+      const reqHeader = {
+        'Authorization': `Bearer ${token}`
+      }
+      //api call to get book details by id
+      const result = await purchaseBookAPI(id,reqHeader)
+
+      if (result.status == 200) {
+        const {checkoutURL} = result.data
+        window.location.href = checkoutURL
+      } else {
+        console.log(result);
+      }
+    }
   }
 
   return (

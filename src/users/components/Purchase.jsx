@@ -44,7 +44,7 @@ function Purchase() {
                                     
                                 </div>
                                 <div>
-                                    <img src="https://rukminim2.flixcart.com/image/480/640/kk76wsw0/book/s/t/a/the-complete-novels-sherlock-holmes-b-original-imafzhubtkywgr5w.jpeg?q=90" alt="book" />
+                                    <img src={book.imageURL} alt="book" />
                                 </div>
                             </div>
                         </div>

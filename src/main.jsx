@@ -5,13 +5,16 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import ShareContext from './contextAPI/ShareContext.jsx'
+import GuardContext from './contextAPI/GuardContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <GoogleOAuthProvider clientId='667571991056-vpjfr1drujjn4lltrgvr9adlb2hp5m2v.apps.googleusercontent.com'>
         <ShareContext>
-          <App />
+          <GuardContext>
+            <App />
+          </GuardContext>
         </ShareContext>
       </GoogleOAuthProvider>
     </BrowserRouter>
